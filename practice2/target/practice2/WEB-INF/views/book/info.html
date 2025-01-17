@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Information of user</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    .info-container {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .info-container p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #555;
+    }
+    .table-container {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    a:hover {
+      color: #4CAF50;
+    }
+    form {
+      margin-top: 16px;
+    }
+    select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .header {
+      display: flex;
+      justify-content: center;
+      background-color: #4CAF50;
+      padding: 10px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header a {
+      text-decoration: none;
+      color: white;
+      padding: 14px 20px;
+      margin: 0 10px;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .header a:hover {
+      background-color: #45a049;
+    }
+    .content {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <button>
+    <a th:href="@{/userAdd}">Create user</a>
+  </button>
+  <form th:action="@{/userList}" method="get">
+    <button type="submit">Users List</button>
+  </form>
+  <button>
+    <a th:href="@{/bookAdd}">Create book</a>
+  </button>
+  <form th:action="@{/bookList}" method="get">
+    <button type="submit">Books List</button>
+  </form>
+</div>
+
+<h1>Book's information</h1>
+<div class="info-container">
+  <p><strong>Name:</strong> <span th:text="${book.name}"></span></p>
+  <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
+</div>
+<h1>User's list of current book</h1>
+<div class="table-container">
+  <table>
+    <thead>
+    <tr>
+      <th>Users</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${users}">
+      <td>
+        <a th:href="@{${entry.key}}" th:text="${entry.value}"></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <form th:action="@{/book/addUser(id=${bookId})}" th:method="post">
+          <select name="userId" required>
+            <option value="" disabled selected>Choose a user</option>
+            <option th:each="user : ${availableUsers}" th:value="${user.key}" th:text="${user.value}"></option>
+          </select>
+          <button type="submit">Add user</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

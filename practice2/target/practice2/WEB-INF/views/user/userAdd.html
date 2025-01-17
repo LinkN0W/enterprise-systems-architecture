@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Создание нового читателя</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .header {
+      display: flex;
+      justify-content: center;
+      background-color: #4CAF50;
+      padding: 10px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header a {
+      text-decoration: none;
+      color: white;
+      padding: 14px 20px;
+      margin: 0 10px;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .header a:hover {
+      background-color: #45a049;
+    }
+    .content {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <button>
+    <a th:href="@{/userAdd}">Create user</a>
+  </button>
+  <form th:action="@{/userList}" method="get">
+    <button type="submit">Users List</button>
+  </form>
+  <button>
+    <a th:href="@{/bookAdd}">Create book</a>
+  </button>
+  <form th:action="@{/bookList}" method="get">
+    <button type="submit">Books List</button>
+  </form>
+</div>
+
+<h1>Create a new user</h1>
+<form th:action="@{/user/create}" th:object="${user}" th:method="POST">
+  <label for="surname">Surname:</label>
+  <input type="text" id="surname" name="surname" th:field="*{surname}" required>
+
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" th:field="*{name}" required>
+
+  <label for="patronymic">Patronymic:</label>
+  <input type="text" id="patronymic" name="patronymic" th:field="*{patronymic}">
+
+  <label for="birthdate">Birthdate:</label>
+  <input type="date" id="birthdate" name="birthdate" th:field="*{birthdate}" required>
+
+  <label for="gender">Gender:</label>
+  <select id="gender" name="gender" th:field="*{gender}"  required>
+    <option value="">Choose</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+  </select>
+
+  <button type="submit">Send</button>
+</form>
+
+</body>
+</html>
